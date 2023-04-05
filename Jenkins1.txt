@@ -1,0 +1,28 @@
+Jenkins:
+
+open source automation server. With jenkins,Organizations can accelerate the software development process by automating it.
+Jenkins manages and controls software delivery process throughout the entire lifecycle,including build,document,test,package,stage,deployment
+
+Continous Integration:
+
+Devops software development practice where developers regularly merge their code changes in to central repository,after which automated build and tests are run.
+ It refers to the build and unit testing stages of the software release process.
+Every revision that is committed triggers an automated build and test.
+
+Continous Integration Benefits:
+
+1. Improve developer productivity.
+2. Find and address bugs quicker.
+3. Deliver updates faster.
+
+Continous Delivery:
+
+Software development praactice where code changes are automatically prepared for a release to production.
+A pillar of modern application development,continous delivery expands upon continous integration by deploying all code changes to testing environment and/or a productionenvironment after the build stage.
+
+Continous Deliver Benefits:
+
+1. Automate the software release process.
+2. Improve developer produtiity.
+3.  
+ 
