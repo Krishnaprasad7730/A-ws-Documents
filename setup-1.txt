@@ -1,0 +1,72 @@
+system-1:
+=========
+1.install java-openjdk11  --path:/usr/lib/jvm/java-17-amazon-corretto.x86_64
+2.yum install maven --path:/usr/share/maven
+3.yum install git
+4.wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+5. rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+6.yum install jenkins
+7.systemctl start jenkins
+8.enter password for unlocking jenkins
+
+system-2:
+=========
+1. Amazon-linux-extras install java-openjdk11.
+ 
+2. wget https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.65/bin/apache-tomcat-9.0.65.tar.gz
+
+3. tar -xvzf apache-tomcat-9.0.65.tar.gz
+
+4. If you want to change the port of tomcat:
+    cd apache tomcat->cd conf->vi server.xml
+    Change the connector port to 80 along with executor port to 80 which below to the connector port and remove the comment for the connector port.
+
+5. vi /tomcat/webapps/manager/context.xml
+   comment-out value tag   <!--     /-->   (Comment out the tag by giving the hyphens after the slash.)
+
+6. vi /tomcat/conf/
+       <role rolename="admin-gui"/><role rolename="manager-gui"/><user username="admin" password="admin" roles="admin-gui,manager-gui"/>
+
+7. Restart tomcat.
+
+8. Copy the public ip address and paste it in the browser.
+Note: Now the tomcat runs on 80 port itself and no need to mention the port alngside the ip address.
+
+9. If you have given the port as 8081 or 8080 then you have to mention the port with the ip address.
+
+10. Check whether tomcat manager aand host-manager are working by entering the username and password.
+
+11. Now install an application like jenkins in the webapps and check if it's working or not.
+
+
+
+
+
+
+
+M2_HOME=/root/maven
+M2=/root/maven/bin
+JAVA_HOME=/usr/lib/jvm/java-11-openjdk-11.0.16.0.8-1.amzn2.0.1.x86_64
+
+
+
+
+
+
+<role rolename="admin-gui"/><role rolename="manager-gui"/><user username="admin" password="admin" roles="admin-gui,manager-gui"/>
+
+
+
+
+
+
+
+
+
+
+
+
+system-1:
+=========
+1.go to jenkins-dashboard install 1)maven integration 2)deploy to container plugins
+2.job create --select maven project
