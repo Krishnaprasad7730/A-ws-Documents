@@ -1,0 +1,47 @@
+1. If u want expse the applcation you have to go with ingress or load balancer.
+2. The serviceName in the ingress file and name in the metadata file name should be same.
+3. Host name in the ingress file should be a real domain and cannot write anything wich doesnt work.
+4. Map domain name to Nodeport Ip address which is the entry point.
+5. Function of ingress controller is to evaluate all the rules that are defined in the cluster by this way to manage all the redirections.
+6. Ingress controller will be the entry point to the cluster.
+7. k8's nginx ingress controller.
+8. Without the Ingress controller when we have to access the application we must enter the ip address of nodes into the domain.
+9. With the help of ingress controller we dont need to give the ip addresses to the domain.
+10. Single entry point to the application.
+11. Based on the website link it will redirect to that website.
+12. Git clone link of nginx ingress repo.  (This is another method of nginx ingress controller) 1st method.
+13. cd nginx-ingress
+14. ls
+15. cd deploy
+16. ll
+17. cd static
+18. ls
+19. Provider 
+20. aws
+21. kubectl apply -f deployment.yml
+22. kubectl get namespaces
+23. Create an ingress by writing a file.. 2nd method
+23. apiVersion: networking.k8's.io/v1beta1
+kind: Ingress
+metadata: 
+    name: myapp-Ingress
+spec: 
+   rules:
+   - host: Krish.com  (Domain name)
+     http:
+        paths: 
+        - backend:
+              serviceName: myapp-internal-service
+              servicePort: 80
+    - host: purchase.com  (Domain name)
+      http:
+        paths: 
+        - backend: 
+               serviceName: myapp-internal-service
+               servicePort: 80
+    - host: examples.com  (Domain name)
+      http: 
+         paths:
+         - backend: 
+                serviceName: myapp-internal-service
+                servicePort: 80
