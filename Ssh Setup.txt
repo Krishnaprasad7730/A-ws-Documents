@@ -1,0 +1,33 @@
+Ssh Setup:
+
+1st Server Or Master Server:
+
+1. Launch a instance.
+2. sudo su -
+3. Yum update -y
+4. ssh-keygen
+5. cd .ssh
+6. ls
+7. Public key and private keys will be displayed.
+
+2nd Server Or Slave Instance:
+
+1. Launch an instance.
+2. sudo su -
+3. yum update -y
+4. cd /etc/ssh
+5. ls
+6. vi sshd_config
+7. Change to "yes" for password authentication.
+8. :wq! (Save and exit)
+9. servie sshd restart (Restart the sshd service)
+10. passwd ec2-user.
+
+
+Now, get back to master server and enter this command:
+      ssh-copy-id ec2-user@ip address of the slave instance.
+      Give the password.
+      Now the public key is of master is added to the slave. 
+      Try connecting to the slave instance by:
+	ssh -i "pemkey name" ec2-user@ ipaddress of slave.
+	The ssh connection without password is sucessful.
