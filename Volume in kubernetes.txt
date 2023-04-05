@@ -1,0 +1,65 @@
+1. Create a directory.
+   sudo mkdir /mnt/data
+2. sudo sh -c "echo 'Hello from Kubernetes storage' > /mnt/data/index.html"
+3. Test that the index.html file exists:
+   cat /mnt/data/index.html
+4. Create a persistent volume.
+5. vi persistent-volume.yml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: task-pv-volumes
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"
+6. Save and Exit.
+7. Kubectl apply -f persistent-volume.yml
+8. Create a persistent volume claim.
+9. vi pvc.yml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: task-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
+10. Save and Exit.
+11. kubectl apply -f pvc.yml
+12. Now, create a pod to claim for the storage.
+13. vi pv-pod.yml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: task-pv-pod
+spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+        claimName: task-pv-claim
+  containers:
+    - name: task-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "http-server"
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage
+14. kubectl apply -f pv-pod.yml
+15. kubectl get pods -o wide
+16. kubectl exec -it <name of pod> -- /bin/bash
+17.  apt update
+apt install curl
+curl http://localhost/.
+18. 
