@@ -1,0 +1,121 @@
+1. Launch 2 instances with the following configuration:
+Master: T2.medium, Worker node: t2.micro
+2. On Master & worker node:
+   * sudo su -  (switch to root user).
+   * apt-get update  (To keep all the packages up to date).
+   * apt-get install docker.io -y  (Install docker)
+   * service docker restart  (Start Docker daemon).
+   * curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - (To add the key to authenticate the software packages). 
+   * echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" >/etc/apt/sources.list.d/kubernetes.list  (Add the Kubernetes apt repository)
+   * apt-get update
+   * apt install kubeadm=1.20.0-00 kubectl=1.20.0-00 kubelet=1.20.0-00 -y  (Install kubeadm,kubectl kubelet).
+3. On Master:
+   * kubeadm init --pod-network-cidr=192.168.0.0/16  (Initialize kubadm and give the cidr).
+4.Copy the token and paste it into the worker node.
+5.On Master: 
+  * mkdir -p $HOME/.kube (To Create the .kube subdirectory in your home directory).
+  * sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config  (To Create a copy of the Kubernetes admin.conf file in the .kube directory).
+  * sudo chown $(id -u):$(id -g) $HOME/.kube/config  (To change the permissions for the file).
+  * kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml (To Install Calico package). 
+  * kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.49.0/deploy/static/provider/baremetal/deploy.yaml  (To Install Ingress Controller).  
+6. kubectl get nodes in the master (To get the nodes).
+* kubectl get nodes.
+7. Create a file naming nginx.yml  (For Deployment purpose).
+* For the pod nginx.yaml file:
+File name: nginx.yaml
+kind: Pod
+apiVersion: v1
+metadata:
+  name: nginx-pod
+  labels:
+    app: demoapp
+spec:
+  containers:
+  - image: nginx
+    name: nginx-demoapp
+    ports:
+    - containerPort: 80
+====================================================
+Deployment file: kind is Deployment:
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: krishna
+  labels:
+    app: nginx
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+
+* kubectl apply -f nginx.yml
+=======================================================================================================
+8. To create a service
+*  kubectl create -f nginx_service.yml  (To deploy the cluster).
+*  For the Service.yaml file:
+File name: nginx-service.yaml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: 80
+  selector:
+    app: nginx
+  type: NodePort
+
+* Kubectl apply -f nginx-service.yml
+* kubectl get svc. (There you get the node port)
+====================================================================
+9. Steps for Master:
+10. kubectl get svc nginx.  (To get the services)
+11. Verify the working of the service by browsing to the IP address of the master or slave 
+with the node port.
+=============================================================================================================================================
+15. Creating a ClusterIP:
+*  vi ClusterIP.yml
+   apiVersion: v1
+   kind: service
+   metadata:
+       name: cluster-IP
+  spec:
+    type: ClusterIP
+    ports: 
+      - targetPort: 80
+        port: 80
+    selector: 
+        app: myapp
+        type: backend
+*  kubectl apply -f ClusterIP.yml
+*  kubectl get svc.
+================================================
+16. Create a loadbalancer service:
+*  vi load-balancer.yml
+*  apiVersion: v1
+   kind: service
+   metadata: 
+      name: load-balancer
+   spec: 
+     type: LoadBalancer
+     ports:
+     - port: 80
+       targetPort: 80
+     selector: 
+        app: nginx
+

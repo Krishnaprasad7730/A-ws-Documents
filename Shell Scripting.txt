@@ -1,0 +1,135 @@
+  Shell Scripting:
+
+A shell is an environment in which 
+commands, programs, and shell scripts are 
+run.
+
+Types of shell:
+BASH : Most common shell available on all linux and debian based systems.
+CSH 0R C shell : This Shell scripting program uses the C programming’s shell
+syntax and its almost similar to C.
+KSH OR K Shell : This shell is quite advanced and it’s a high level programming language, used in 
+Oracle.
+TCSH : TCSH is an advanced version of Berkeley Unix C shell. It again supports C
+style syntax.
+
+When defining a variable , the variable name must be prefixed with dollar[$] symbol.
+
+$HOME      Defines the user's home directory.
+$PATH      Indicates the location of the commands.
+$SHELL     Defines the login shell type.
+$USER      Contains the user's system name
+
+Ex: name="KRISHNA"
+    echo${name}
+
+NEED OF SHELL SCRIPTING :
+
+• Creating backup jobs 
+• Archiving log files 
+• Configuring systems and services 
+• Simplifying repetitive task 
+• Automating task
+
+
+
+Create a file name shell.sh with extension.sh
+shell.sh
+enter the file and write a script
+#! - this is shebang or ashbang.
+/bin/bash - This represents which shell is being used for the script.
+#! /bin/bash
+echo "KRISHNA"
+Exit the file and give the permissions as below:
+chmod +x shell.sh
+execute the file by this command:
+./shell.sh
+The output will be shown as:
+KRISHNA
+
+
+Variables and comment:
+
+Two types of variables:
+1. system variables and user defined variables.
+ System variables are created and maintained by linux or unix operating system.
+Use Defined variables:
+ These variables are created and maintained by the user.
+A variable name could contain any alphabets (a-z, A-Z), any digits(0-9) and underscore( _ ). However, a variable name must start with an alphabet or underscore.
+
+
+echo $BASH - This gives the bash in which you are working.
+name=Krishna
+echo $name
+Execute the script 
+The output is Krishna.
+value10=13
+echo $value10
+save and exit
+run the file.
+the output is 13.
+
+Read User Input:
+
+echo "Enter name : "
+read name
+echo "Entered name : $name"
+Output: Enter the name and click on ok.
+
+
+#! /bin/bash
+echo "Enter names : "
+read name1 name2 name3
+echo "names : $name1 , $name2 , $name3"
+Enter names: krish radha veer
+Output: krish radha veer.
+
+
+Accessing Variable:
+Variable data could be accessed by appending the variable name with ‘$’ as follows:
+
+#!/bin/bash
+
+VAR_1="Devil"
+VAR_2="OWL"
+
+echo "$VAR_1$VAR_2"
+Output:
+
+DevilOWL.
+
+Unsetting Variables:
+The unset command directs a shell to delete a variable and its stored data from list of variables. It can be used as follows:
+
+#!/bin/bash
+
+var1="Devil"
+var2=23
+echo $var1 $var2
+
+unset var1
+
+echo $var1 $var2
+Output:
+
+DEVIL 23
+23.
+
+Read only Variable:
+These variables are read only i.e, their values could not be modified later in the script. Following is an example:
+
+#!/bin/bash
+var1="Devil"
+var2=23
+readonly var1
+echo $var1 $var2
+var1=23
+echo $var1 $var2
+Output:
+
+Devil 23
+./bash1: line 8: var1: readonly variable
+Devil 23.
+
+
+

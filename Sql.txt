@@ -1,0 +1,30 @@
+1. To connect to a mysql server execute this below command.
+   mysql -h endpoint of rds -P 3306 -u admin -p
+2. To create a database:
+create database <database name>
+Ex: create database Krishna
+3. Check the databases.
+show databases;
+4. Entry into the database:
+use database <database name>
+Ex: use database Krishna
+5. To Create a table in the database.
+ create table Krishna (
+ customer_id Int not null,
+ customer_firstname varchar(20),
+ customer_lastname varchar(10),
+ customer_mobile Int,
+ Gender char,
+ Primary key(customer_id)
+ );
+6. Now insert data into the table.
+insert into Krishna values(1, 'Mahesh', 'Babu', 1234567890, 'Male');
+7. Select * from Krishna;
+8. All the content displays on the screen.
+9. To change any schema from the table use the below command:
+  Alter table Krishna modify column gender varchar(10);
+10. Update the details:
+ update Krishna set gender='male' where customer_id=1;
+11. Select * from Krishna;
+13. Check whether the data is updated or not.
+14. 
